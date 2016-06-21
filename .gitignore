@@ -1,0 +1,7 @@
+public
+vendor
+app
+composer.phar
+.vagrant
+VagrantFile
+.idea

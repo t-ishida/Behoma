@@ -1,0 +1,29 @@
+{
+    "name": "t-ishida/behoma",
+    "authors": [
+        {
+            "name": "t_ishida",
+            "email": "ishida@aainc.co.jp"
+        }
+    ],
+    "repositories": [
+        {
+            "url": "https://github.com/aainc/Hoimi.git",
+            "type": "git"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Behoma\\": "src/Behoma",
+            "Sample\\": "app"
+        }
+    },
+    "require": {
+        "aainc/hoimi": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "t_ishida/zaolik": "dev-master",
+        "phake/phake": "2.*"
+    }
+}
