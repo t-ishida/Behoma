@@ -1,14 +1,25 @@
 <?php
 namespace Behoma\Net;
+/**
+ * Class Uri
+ * @package Behoma\Net
+ */
 class Uri
 {
     private $url = null;
 
+    /**
+     * Uri constructor.
+     * @param $url
+     */
     public function __construct($url)
     {
         $this->url = $url;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function normalize()
     {
         $url = $this->url;
@@ -22,6 +33,9 @@ class Uri
         return preg_replace('#\?.+$#', '?' . implode('&', $tmp), $url);
     }
 
+    /**
+     * @return mixed
+     */
     public function getDomainName()
     {
         $url = $this->url;
@@ -30,11 +44,18 @@ class Uri
         return $elements['host'];
     }
 
+    /**
+     * @return string
+     */
     public function get()
     {
         return file_get_contents($this->url);
     }
 
+    /**
+     * @param $params
+     * @return string
+     */
     public function post($params)
     {
         $data = http_build_query($params, "", "&");
@@ -51,6 +72,9 @@ class Uri
         return file_get_contents($this->url, 0, $context);
     }
 
+    /**
+     * @return bool|int
+     */
     public function isValid()
     {
         $str = $this->url;
@@ -58,6 +82,9 @@ class Uri
         return preg_match('#^https?://[0-9a-zA-Z-_\#:%\.@/\?&=~]+$#', $str);
     }
 
+    /**
+     * @return null
+     */
     public function toString()
     {
         return $this->url;

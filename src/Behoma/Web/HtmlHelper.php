@@ -1,8 +1,12 @@
 <?php
-namespace Behoma\View;
+namespace Behoma\Web;
 
 use Behoma\Net\Uri;
 
+/**
+ * Class HtmlHelper
+ * @package Behoma\Web
+ */
 trait HtmlHelper
 {
 

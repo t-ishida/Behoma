@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ishidatakeshi
- * Date: 2016/06/20
- * Time: 17:00
- */
-
-namespace Behoma\View;
+namespace Behoma\Web;
 
 
 use Behoma\Core\LiteralManager;
@@ -17,7 +10,7 @@ class BaseHtmlViewTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->target = \Phake::partialMock('Behoma\View\BaseHtmlView', new LiteralManager());
+        $this->target = \Phake::partialMock('Behoma\Web\BaseHtmlView', new LiteralManager());
         $_SERVER['SERVER_NAME'] = 'aainc.co.jp';
     }
 

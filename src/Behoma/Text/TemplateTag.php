@@ -1,12 +1,22 @@
 <?php
 namespace Behoma\Text;
 
+/**
+ * Class TemplateTag
+ * @package Behoma\Text
+ */
 class TemplateTag
 {
     private $data = null;
     private $content = '';
     private $plugins = array();
 
+    /**
+     * TemplateTag constructor.
+     * @param null $content
+     * @param null $data
+     * @param array $plugins
+     */
     public function __construct($content = null, $data = null, $plugins = array())
     {
         if (is_string($content)) {
@@ -18,6 +28,13 @@ class TemplateTag
         $this->plugins = $plugins;
     }
 
+    /**
+     * @param null $currentData
+     * @param int $idx
+     * @param string $endData
+     * @param int $canEval
+     * @return array|string
+     */
     public function evalTag($currentData = null, $idx = 0, $endData = '', $canEval = 1)
     {
         list ($inTags, $buf, $ret, $stack, $quote) = array(false, '', '', array(), null);
@@ -105,6 +122,10 @@ class TemplateTag
         return !$endData ? ($ret . $buf) : array($i, $ret . $buf);
     }
 
+    /**
+     * @param $chars
+     * @return array
+     */
     public function getTagInfo($chars)
     {
         $inQuote = null;
@@ -144,6 +165,10 @@ class TemplateTag
         return $ret;
     }
 
+    /**
+     * @param $chars
+     * @return array
+     */
     public function parseAttr($chars)
     {
         $label = '';
@@ -186,6 +211,13 @@ class TemplateTag
         return array('label' => $label, 'value' => $value);
     }
 
+    /**
+     * @param $idx
+     * @param $name
+     * @param $data
+     * @param array $attrs
+     * @return array
+     */
     public function evalLoop($idx, $name, $data, $attrs = array())
     {
         $ret = '';
@@ -207,6 +239,13 @@ class TemplateTag
         return array($after + 1, $ret);
     }
 
+    /**
+     * @param $idx
+     * @param $name
+     * @param $data
+     * @param array $attrs
+     * @return array
+     */
     public function evalIF($idx, $name, $data, $attrs = array())
     {
         $tmp = $this->data;
@@ -220,31 +259,49 @@ class TemplateTag
         return array($after + 1, $cont);
     }
 
+    /**
+     * @param TemplateTagPlugin $plugin
+     */
     public function addPlugin(TemplateTagPlugin $plugin)
     {
         $this->plugins[] = $plugin;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getContent()
     {
         return $this->content;
     }
 
+    /**
+     * @param $content
+     */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+    /**
+     * @return null
+     */
     public function getData()
     {
         return $this->data;
     }
 
+    /**
+     * @param $data
+     */
     public function setData($data)
     {
         $this->data = $data;
     }
 
+    /**
+     * 
+     */
     public function clear()
     {
         $this->data = null;

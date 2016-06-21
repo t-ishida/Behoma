@@ -1,20 +1,32 @@
 <?php
-namespace Behoma\View;
+namespace Behoma\Web;
 
 use Behoma\Core\LiteralManager;
 use Hoimi\Response\Html;
 
+/**
+ * Class BaseHtmlView
+ * @package Behoma\Web
+ */
 abstract class BaseHtmlView extends Html
 {
     use HtmlHelper;
     private $charset = 'utf8';
     private $literalManager = null;
 
+    /**
+     * BaseHtmlView constructor.
+     * @param LiteralManager $literalManager
+     */
     public function __construct(LiteralManager $literalManager)
     {
         $this->literalManager = $literalManager;
     }
 
+    /**
+     * @param $key
+     * @param null $params
+     */
     public function assignWord($key, $params = null)
     {
         $string = $this->literalManager->get($key, $params);
@@ -24,6 +36,9 @@ abstract class BaseHtmlView extends Html
         $this->assign($string);
     }
 
+    /**
+     * @param $key
+     */
     public function assignMessage($key)
     {
         $string = $this->literalManager->buildMessage($key);
@@ -33,6 +48,10 @@ abstract class BaseHtmlView extends Html
         $this->assign($string);
     }
 
+    /**
+     * @param $key
+     * @param null $params
+     */
     public function writeWord($key, $params = null)
     {
         $string = $this->literalManager->get($key, $params);
@@ -42,6 +61,10 @@ abstract class BaseHtmlView extends Html
         $this->writeHTML($string);
     }
 
+    /**
+     * @param $key
+     * @param $date
+     */
     public function assignDate($key, $date)
     {
         $string = $this->literalManager->get($key);
@@ -60,6 +83,10 @@ abstract class BaseHtmlView extends Html
         $this->assign(date($string, $time));
     }
 
+    /**
+     * @param $key
+     * @param null $params
+     */
     public function writeContent($key, $params = null)
     {
         $string = $this->literalManager->get($key, $params);
@@ -68,8 +95,10 @@ abstract class BaseHtmlView extends Html
         }
         $this->writeHTML($this->toHalfContent($string));
     }
-    
-    
+
+    /**
+     * @return mixed|string
+     */
     public function getContent()
     {
         $templateName = $this->getTemplatePath();
@@ -80,6 +109,9 @@ abstract class BaseHtmlView extends Html
         return mb_convert_encoding(ob_get_clean(), $this->getCharset(), 'UTF8');
     }
 
+    /**
+     * @return string
+     */
     public function getTemplatePath()
     {
         return str_replace(
@@ -89,15 +121,37 @@ abstract class BaseHtmlView extends Html
         ) . '.php';
     }
 
+    /**
+     * @return mixed
+     */
     public abstract function nameSpaceRoot();
+
+    /**
+     * @return mixed
+     */
     public abstract function responseDirectoryName();
+
+    /**
+     * @return mixed
+     */
     public abstract function appRoot();
+
+    /**
+     * @return mixed
+     */
     public abstract function templateDirectoryName();
+
+    /**
+     * @return string
+     */
     public function getCharset()
     {
         return $this->charset;
     }
 
+    /**
+     * @param $charset
+     */
     public function setCharset($charset)
     {
         $this->charset = $charset;

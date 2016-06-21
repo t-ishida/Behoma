@@ -1,8 +1,7 @@
 <?php
-namespace Behoma\Core;
+namespace Behoma\Web;
 
 
-use Behoma\View\ActionForm;
 
 trait ActionFormBuilder
 {
@@ -19,9 +18,18 @@ trait ActionFormBuilder
         return $form;
     }
 
+    /**
+     * @return mixed
+     */
     public abstract function getActionFormName();
 
+    /**
+     * @return mixed
+     */
     public abstract function getRequest();
 
+    /**
+     * @return mixed
+     */
     public abstract function getSession();
 }

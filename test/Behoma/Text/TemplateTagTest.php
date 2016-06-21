@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ishidatakeshi
- * Date: 2016/06/20
- * Time: 14:41
- */
-
 namespace Behoma\Text;
 
 

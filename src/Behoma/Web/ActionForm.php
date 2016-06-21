@@ -1,10 +1,14 @@
 <?php
-namespace Behoma\View;
+namespace Behoma\Web;
 
-use Behoma\Core\Bindable;
-use Behoma\Core\Session;
+use Hoimi\Bindable;
 use Hoimi\Request;
+use Hoimi\Session;
 
+/**
+ * Class ActionForm
+ * @package Behoma\Web
+ */
 class ActionForm implements Bindable
 {
     use HtmlHelper;
@@ -21,6 +25,12 @@ class ActionForm implements Bindable
     const ERROR_KEY = 'errors';
     const TOKEN_KEY = 'token';
 
+    /**
+     * ActionForm constructor.
+     * @param Request $request
+     * @param Session $session
+     * @param null $containerName
+     */
     public function __construct(Request $request, Session $session, $containerName = null)
     {
         $this->request = $request;
@@ -241,7 +251,12 @@ class ActionForm implements Bindable
         echo $buf;
     }
 
-    public function formSubmit($name = 'hoge', $label = 'submit', $attributes = array())
+    /**
+     * @param string $name
+     * @param string $label
+     * @param array $attributes
+     */
+    public function formSubmit($name = 'submit', $label = 'submit', $attributes = array())
     {
         if (!$name) {
             throw new \InvalidArgumentException('name required');
@@ -312,6 +327,9 @@ class ActionForm implements Bindable
         $this->container[self::VALUE_KEY][$name] = $value;
     }
 
+    /**
+     * 
+     */
     public function clear()
     {
         $this->container = array();
@@ -373,11 +391,23 @@ class ActionForm implements Bindable
         return $this->container[self::ERROR_KEY];
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function isValid($name)
     {
         return !$this->getErrors($name);
     }
 
+    /**
+     * 
+     */
+    public function saveRequest()
+    {
+        $this->container[self::VALUE_KEY] = $this->request->getBody();
+    }
+    
     /**
      * @param array $errors
      */
@@ -418,6 +448,9 @@ class ActionForm implements Bindable
     }
 
 
+    /**
+     * @return bool
+     */
     public function verifyToken()
     {
         $token = $this->container[self::TOKEN_KEY];
@@ -425,12 +458,17 @@ class ActionForm implements Bindable
         return $this->request->get('token') === $token;
     }
 
+    /**
+     * @return mixed
+     */
     public function generateToken()
     {
-        $this->container[self::TOKEN_KEY] = sha1(uniqid(mt_rand(), true));
-        return $this->container[self::TOKEN_KEY];
+        return $this->container[self::TOKEN_KEY] = sha1(uniqid(mt_rand(), true));
     }
 
+    /**
+     * @param null $key
+     */
     public function delete($key = null)
     {
         if ($key === null) {
@@ -440,6 +478,9 @@ class ActionForm implements Bindable
         }
     }
 
+    /**
+     * @param null $key
+     */
     public function deleteErrors($key = null)
     {
         if ($key === null) {
@@ -449,16 +490,25 @@ class ActionForm implements Bindable
         }
     }
 
+    /**
+     * @return string
+     */
     public function getSessionKey()
     {
         return self::CONTAINER_KEY . '.' . $this->key;
     }
 
+    /**
+     * @param array $content
+     */
     public function setSessionContent(array $content)
     {
         $this->container = $content;
     }
 
+    /**
+     * @return array|null
+     */
     public function getSessionContent()
     {
         return $this->container;

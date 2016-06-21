@@ -1,16 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ishidatakeshi
- * Date: 2016/06/20
- * Time: 17:05
- */
-
-namespace Behoma\View;
+namespace Behoma\Web;
 
 
-use Behoma\Core\Session;
 use Hoimi\Request;
+use Hoimi\Session;
 
 class ActionFormTest extends \PHPUnit_Framework_TestCase
 {
@@ -193,7 +186,7 @@ class ActionFormTest extends \PHPUnit_Framework_TestCase
     function createMock($method = array())
     {
         return $this->getMockForAbstractClass(
-            '\Behoma\View\ActionForm',
+            '\Behoma\Web\ActionForm',
             array(),
             'ActionForm',
             false,
