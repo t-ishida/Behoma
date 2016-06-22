@@ -156,5 +156,13 @@ abstract class BaseHtmlView extends Html
     {
         $this->charset = $charset;
     }
+    
+    /**
+     * @return LiteralManager|null
+     */
+    public function getLiteralManager()
+    {
+        return $this->literalManager;
+    }
 }
 
