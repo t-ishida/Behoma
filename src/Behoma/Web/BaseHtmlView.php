@@ -2,13 +2,12 @@
 namespace Behoma\Web;
 
 use Behoma\Core\LiteralManager;
-use Hoimi\Response\Html;
 
 /**
  * Class BaseHtmlView
  * @package Behoma\Web
  */
-abstract class BaseHtmlView extends Html
+abstract class BaseHtmlView 
 {
     use HtmlHelper;
     private $charset = 'utf8';
@@ -58,7 +57,7 @@ abstract class BaseHtmlView extends Html
         if (!$string) {
             throw new \RuntimeException('no key in dictionary:' . $key);
         }
-        $this->writeHTML($string);
+        $this->writeHtml($string);
     }
 
     /**
@@ -93,7 +92,7 @@ abstract class BaseHtmlView extends Html
         if (!$string) {
             throw new \RuntimeException('no key in dictionary:' . $key . ', ', $this->literalManager->getLanguage());
         }
-        $this->writeHTML($this->toHalfContent($string));
+        $this->writeHtml($this->toHalfContent($string));
     }
 
     /**
@@ -156,7 +155,22 @@ abstract class BaseHtmlView extends Html
     {
         $this->charset = $charset;
     }
-    
+
+    public function assign($word)
+    {
+        echo htmlspecialchars($word, ENT_QUOTES);
+    }
+
+    public function writeHtml($html)
+    {
+        echo $html;
+    }
+
+    public function assignUrl($word)
+    {
+        echo urlencode($word);
+    }
+
     /**
      * @return LiteralManager|null
      */
@@ -164,5 +178,6 @@ abstract class BaseHtmlView extends Html
     {
         return $this->literalManager;
     }
+
 }
 
