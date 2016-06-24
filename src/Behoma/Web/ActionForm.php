@@ -453,11 +453,14 @@ class ActionForm implements Bindable
      */
     public function verifyToken()
     {
-        $token = $this->container[self::TOKEN_KEY];
-        unset($this->container[self::TOKEN_KEY]);
-        return $this->request->get('token') === $token;
-    }
-
+        $result = false;
+        if (isset($this->container[self::TOKEN_KEY])) {
+            $token = $this->container[self::TOKEN_KEY];
+            unset($this->container[self::TOKEN_KEY]);
+            $result = $this->request->get('token') === $token;
+        }
+        return $result;
+    
     /**
      * @return mixed
      */
