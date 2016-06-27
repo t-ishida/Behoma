@@ -460,6 +460,7 @@ class ActionForm implements Bindable
             $result = $this->request->get('token') === $token;
         }
         return $result;
+    }
     
     /**
      * @return mixed
