@@ -10,24 +10,18 @@ use Hoimi\Request;
  */
 abstract class BasePostAction extends BaseAction
 {
-    use ActionFormBuilder;
-
+    use ActionFormValidatable;
+    use ActionFormVerifier;
+    
     /**
      * @return mixed
      * @throws ErrorRedirectException
      */
     public function post()
     {
-        $request =$this->getRequest(); 
-        $validationResult = \Hoimi\Validator::validate(
-            $request,
-            $this->getValidatorDefinitions()
-        );
-        if ($validationResult) {
-            $this->getActionForm()->saveRequest();
-            $this->getActionForm()->setErrors($validationResult);
-            throw new ErrorRedirectException($this->formUrl());
-        }
+        $request =$this->getRequest();
+        $this->verifyToken();
+        $this->validate($request);
         $response = $this->doPost($request);
         if (!($response instanceof Redirect)) {
             throw new \RuntimeException('post method can return only redirect response.');
@@ -35,16 +29,6 @@ abstract class BasePostAction extends BaseAction
         $this->getActionForm()->clear();
         return $response;
     }
-
-    /**
-     * @return mixed
-     */
-    public abstract function getValidatorDefinitions();
-
-    /**
-     * @return mixed
-     */
-    public abstract function formUrl();
 
     /**
      * @param Request $request
