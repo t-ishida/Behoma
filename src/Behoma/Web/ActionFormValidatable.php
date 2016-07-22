@@ -4,8 +4,7 @@ namespace Behoma\Web;
 
 trait ActionFormValidatable
 {
-    use ActionFormBuilder;
-    
+
     public function validate($request) 
     {
         $validationResult = \Hoimi\Validator::validate(
@@ -21,4 +20,5 @@ trait ActionFormValidatable
     
     public abstract function getValidatorDefinitions();
     public abstract function formUrl();
+    public abstract function getActionForm();
 }
