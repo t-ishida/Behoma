@@ -4,7 +4,6 @@ namespace Behoma\Web;
 
 trait ActionFormVerifier
 {
-    use ActionFormBuilder;
     public function verifyToken()
     {
         if (!$this->getActionForm()->verifyToken()) {
@@ -13,4 +12,5 @@ trait ActionFormVerifier
     }
     
     public abstract function formUrl();
+    public abstract function getActionForm();
 }
